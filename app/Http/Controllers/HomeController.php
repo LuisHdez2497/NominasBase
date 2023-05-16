@@ -96,7 +96,7 @@ class HomeController extends Controller
 
     public function eliminarIncapacidad($incapacidad_id){
         Incapacidad::findOrFail($incapacidad_id)->delete();
-        return Redirect::refresh();
+        return Redirect::back();
     }
 
     public function imprimirNomina($empleado_id){
