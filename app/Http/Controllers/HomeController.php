@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Empleado;
 use App\Models\Incapacidad;
-use Dompdf\Dompdf;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends Controller
@@ -122,9 +121,11 @@ class HomeController extends Controller
         $porcentajeINFONAVIT = 5;
         $salarioMinimo = 207.44;
 
-        $data['nombre'] = $empleado->nombre.' '.$empleado->apellido_paterno.' '.$empleado->apellido_materno;
+        $data['nombre'] = $empleado->nombre;
+        $data['apellido_paterno'] = $empleado->apellido_paterno;
+        $data['apellido_materno'] = $empleado->apellido_materno;
         $data['rfc'] = $empleado->rfc;
-        $data['fecha'] = now()->format('Y-m-d');
+        $data['fecha'] = now()->format('d/m/Y');
         $data['puesto'] = $empleado->puesto;
         $data['modo_pago'] = $empleado->modo_pago;
         $data['sueldo_bruto'] = number_format($sueldoBase, 2);
@@ -133,8 +134,9 @@ class HomeController extends Controller
         //Percepciones
         $data['compensaciones'] = $empleado->compensaciones;
         $data['puntualidad'] = $empleado->puntualidad;
+        $data['dias_vacaciones'] = $empleado->dias_vacaciones;
         $data['vacaciones'] = number_format((($sueldoBase / 30) * $empleado->dias_vacaciones), 2);
-        $data['vales_despensa'] = $empleado->vales_despensa;
+        $data['vales_despensa'] = $empleado->vales_despensa == null ? '0' : $empleado->vales_despensa;
         //Fin Percepciones
 
         //Deducciones
@@ -144,7 +146,9 @@ class HomeController extends Controller
         //Fin Deducciones
 
         $sueldoMes = (($sueldoBase / 30) * $data['dias_pagados']);
+        $data['sueldo_mensual'] = number_format($sueldoMes, 2);
         $sueldoPercepciones = $sueldoMes+$empleado->compensaciones+$empleado->puntualidad+(($sueldoBase / 30) * $empleado->dias_vacaciones)+$empleado->vales_despensa;
+        $data['total_percepciones'] = number_format($sueldoPercepciones, 2);
         $sueldoNeto = $sueldoPercepciones-(($sueldoBase) * ($porcentajeISR / 100))-($sueldoBase * ($porcentajeIMSS / 100))-(($sueldoBase - (3 * $salarioMinimo)) * ($porcentajeINFONAVIT / 100));
 
         $data['sueldo_neto'] = number_format($sueldoNeto, 2);
@@ -155,13 +159,9 @@ class HomeController extends Controller
 
         $empleado->update($datos);
 
-        Log::info($data);
-        /*
-         $pdf = new Dompdf();
-         $pdf->loadView('nomina', $data);
+        $pdf = Pdf::loadView('nomina', $data);
 
-         return $pdf->stream('archivo.pdf');
-         */
+        return $pdf->stream('nomina.pdf');
     }
 
     public function eliminarEmpleado($empleado_id){
