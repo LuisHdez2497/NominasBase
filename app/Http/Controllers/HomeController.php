@@ -32,6 +32,7 @@ class HomeController extends Controller
         $data['sueldo_base'] = $request->sueldo_base;
         $data['modo_pago'] = $request->modo_pago;
         $data['correo'] = $request->correo;
+        $data['vales_despensa'] = $request->vales_despensa;
 
         Empleado::create($data);
 
@@ -51,6 +52,7 @@ class HomeController extends Controller
         $data['sueldo_base'] = $request->sueldo_base;
         $data['modo_pago'] = $request->modo_pago;
         $data['correo'] = $request->correo;
+        $data['vales_despensa'] = $request->vales_despensa;
 
         $empleado->update($data);
 
@@ -116,7 +118,7 @@ class HomeController extends Controller
         }
 
         $sueldoBase = $empleado->sueldo_base;
-        $porcentajeISR = 10.88;
+        $porcentajeISR = 2.88;
         $porcentajeIMSS = 6.25;
         $porcentajeINFONAVIT = 5;
         $salarioMinimo = 207.44;
@@ -136,7 +138,7 @@ class HomeController extends Controller
         $data['puntualidad'] = $empleado->puntualidad;
         $data['dias_vacaciones'] = $empleado->dias_vacaciones;
         $data['vacaciones'] = number_format((($sueldoBase / 30) * $empleado->dias_vacaciones), 2);
-        $data['vales_despensa'] = $empleado->vales_despensa == null ? '0' : $empleado->vales_despensa;
+        $data['vales_despensa'] = $empleado->vales_despensa == null ? '0' : number_format($empleado->vales_despensa, 2);
         //Fin Percepciones
 
         //Deducciones

@@ -61,7 +61,7 @@
             @endif
 
             @if($vales_despensa != '0')
-                <p>VALES:</p>
+                <p>VALES DE DESPENSA:</p>
             @endif
 
             @if($compensaciones != '0')
