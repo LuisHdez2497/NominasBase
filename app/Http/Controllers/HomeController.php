@@ -6,6 +6,7 @@ use App\Models\Empleado;
 use App\Models\Incapacidad;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redirect;
 
 class HomeController extends Controller
@@ -123,35 +124,39 @@ class HomeController extends Controller
         $porcentajeINFONAVIT = 5;
         $salarioMinimo = 207.44;
 
+        $quincena = now()->format('d');
+        if ($quincena >= 1 && $quincena <=15){
+            $fechaQuincena = '15/'.now()->format('m/Y');
+        }else{
+            $fechaQuincena = '30/'.now()->format('m/Y');
+        }
+
         $data['nombre'] = $empleado->nombre;
         $data['apellido_paterno'] = $empleado->apellido_paterno;
         $data['apellido_materno'] = $empleado->apellido_materno;
         $data['rfc'] = $empleado->rfc;
-        $data['fecha'] = now()->format('d/m/Y');
+        $data['fecha'] = $fechaQuincena;
         $data['puesto'] = $empleado->puesto;
         $data['modo_pago'] = $empleado->modo_pago;
         $data['sueldo_bruto'] = number_format($sueldoBase, 2);
-        $data['dias_pagados'] = 30-$dias; //Cambiar por resta de dias de incapacidad a 30 dias.
+        $data['dias_pagados'] = 15-$dias; //Cambiar por resta de dias de incapacidad a 30 dias.
 
-        //Percepciones
-        $data['compensaciones'] = $empleado->compensaciones;
-        $data['puntualidad'] = $empleado->puntualidad;
-        $data['dias_vacaciones'] = $empleado->dias_vacaciones;
-        $data['vacaciones'] = number_format((($sueldoBase / 30) * $empleado->dias_vacaciones), 2);
         $data['vales_despensa'] = $empleado->vales_despensa == null ? '0' : number_format($empleado->vales_despensa, 2);
-        //Fin Percepciones
-
-        //Deducciones
-        $data['isr'] = number_format((($sueldoBase) * ($porcentajeISR / 100)), 2);
-        $data['imss'] = number_format(($sueldoBase * ($porcentajeIMSS / 100)), 2);
-        $data['infonavit'] = number_format((($sueldoBase - (3 * $salarioMinimo)) * ($porcentajeINFONAVIT / 100)), 2);
-        //Fin Deducciones
 
         $sueldoMes = (($sueldoBase / 30) * $data['dias_pagados']);
         $data['sueldo_mensual'] = number_format($sueldoMes, 2);
-        $sueldoPercepciones = $sueldoMes+$empleado->compensaciones+$empleado->puntualidad+(($sueldoBase / 30) * $empleado->dias_vacaciones)+$empleado->vales_despensa;
+
+
+        $data['compensaciones'] = number_format((($sueldoMes) * (2.3 / 100)), 2);
+        $data['puntualidad'] = number_format((($sueldoMes) * (1.6 / 100)), 2);
+        $data['vacaciones'] = number_format((($sueldoMes) * (2.7 / 100)), 2);
+        $data['isr'] = number_format((($sueldoMes) * ($porcentajeISR / 100)), 2);
+        $data['imss'] = number_format((($sueldoMes) * ($porcentajeIMSS / 100)), 2);
+        $data['infonavit'] = number_format((($sueldoMes - (3 * $salarioMinimo)) * ($porcentajeINFONAVIT / 100)), 2);
+
+        $sueldoPercepciones = $sueldoMes+(($sueldoMes) * (2.3 / 100))+(($sueldoMes) * (1.6 / 100))+(($sueldoMes) * (2.7 / 100))+$empleado->vales_despensa;
         $data['total_percepciones'] = number_format($sueldoPercepciones, 2);
-        $sueldoNeto = $sueldoPercepciones-(($sueldoBase) * ($porcentajeISR / 100))-($sueldoBase * ($porcentajeIMSS / 100))-(($sueldoBase - (3 * $salarioMinimo)) * ($porcentajeINFONAVIT / 100));
+        $sueldoNeto = $sueldoPercepciones-(($sueldoMes) * ($porcentajeISR / 100))-($sueldoMes * ($porcentajeIMSS / 100))-(($sueldoMes - (3 * $salarioMinimo)) * ($porcentajeINFONAVIT / 100));
 
         $data['sueldo_neto'] = number_format($sueldoNeto, 2);
 

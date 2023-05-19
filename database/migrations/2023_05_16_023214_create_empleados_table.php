@@ -25,9 +25,6 @@ class CreateEmpleadosTable extends Migration
             $table->string('puesto');
             $table->string('sueldo_base');
             $table->string('modo_pago');
-            $table->string('compensaciones')->nullable()->default('0');
-            $table->string('puntualidad')->nullable()->default('0');
-            $table->string('dias_vacaciones')->nullable()->default('0');
             $table->string('vales_despensa')->nullable();
             $table->timestamps();
             $table->softDeletes();

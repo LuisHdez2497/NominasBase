@@ -14,8 +14,7 @@ class Empleado extends Model
 
     protected $fillable = [
         'clave', 'nombre', 'apellido_paterno', 'apellido_materno', 'numero_ss',
-        'rfc', 'puesto', 'sueldo_base', 'modo_pago', 'compensaciones', 'puntualidad',
-        'dias_vacaciones', 'vales_despensa', 'correo'
+        'rfc', 'puesto', 'sueldo_base', 'modo_pago', 'vales_despensa', 'correo'
     ];
 
     protected $hidden = ['created_at', 'updated_at', 'deleted_at'];

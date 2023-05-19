@@ -56,20 +56,21 @@
             <p>SUELDO BASE:</p>
             <hr>
             <p>SUELDO X DIAS PAGADOS:</p>
-            @if($puntualidad != '0')
-                <p>PUNTUALIDAD:</p>
-            @endif
 
             @if($vales_despensa != '0')
                 <p>VALES DE DESPENSA:</p>
             @endif
 
+            @if($puntualidad != '0')
+                <p>PUNTUALIDAD(1.6%):</p>
+            @endif
+
             @if($compensaciones != '0')
-                <p>COMPENSACIONES:</p>
+                <p>COMPENSACIONES(2.3%):</p>
             @endif
 
             @if($vacaciones != '0.00')
-                <p>VACACIONES ({{ $dias_vacaciones }} DIAS):</p>
+                <p>VACACIONES (2.7%):</p>
             @endif
             <hr>
             <p>TOTAL:</p>
@@ -78,12 +79,13 @@
             <p>{{'$'.$sueldo_bruto}}</p>
             <hr>
             <p>{{'$'.$sueldo_mensual}}</p>
-            @if($puntualidad != '0')
-            <p>+ {{'$'.$puntualidad}}</p>
-            @endif
 
             @if($vales_despensa != '0')
                 <p>+ {{'$'.$vales_despensa}}</p>
+            @endif
+
+            @if($puntualidad != '0')
+            <p>+ {{'$'.$puntualidad}}</p>
             @endif
 
             @if($compensaciones != '0')
@@ -99,7 +101,7 @@
     </tr>
     <tr>
         <td style="text-align: right">
-            <p>ISR (10.88%):</p>
+            <p>ISR (2.88%):</p>
             <p>IMSS (6.25%):</p>
             <p>INFONAVIT (5%):</p>
             <hr>
