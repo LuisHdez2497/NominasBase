@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Empleado;
+use App\Models\Incapacidad;
 use Illuminate\Database\Seeder;
 
 class EmpleadoSeeder extends Seeder
@@ -142,6 +143,41 @@ class EmpleadoSeeder extends Seeder
             'sueldo_base' => '26000',
             'modo_pago' => 'Efectivo',
             'correo' => 'laura@mail.com'
+        ]);
+
+        Incapacidad::create([
+            'empleado_id' => 1,
+            'fecha_inicio' => '2023-05-16',
+            'fecha_fin' => '2023-05-22',
+            'numero_dias' => '6'
+        ]);
+
+        Incapacidad::create([
+            'empleado_id' => 2,
+            'fecha_inicio' => '2023-05-01',
+            'fecha_fin' => '2023-05-06',
+            'numero_dias' => '5'
+        ]);
+
+        Incapacidad::create([
+            'empleado_id' => 3,
+            'fecha_inicio' => '2023-05-11',
+            'fecha_fin' => '2023-05-14',
+            'numero_dias' => '3'
+        ]);
+
+        Incapacidad::create([
+            'empleado_id' => 4,
+            'fecha_inicio' => '2023-05-18',
+            'fecha_fin' => '2023-05-20',
+            'numero_dias' => '2'
+        ]);
+
+        Incapacidad::create([
+            'empleado_id' => 5,
+            'fecha_inicio' => '2023-05-24',
+            'fecha_fin' => '2023-05-29',
+            'numero_dias' => '5'
         ]);
     }
 }

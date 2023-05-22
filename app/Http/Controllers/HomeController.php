@@ -77,25 +77,6 @@ class HomeController extends Controller
         return response()->json('Exito');
     }
 
-    public function agregarIncapacidad(Request $request, $empleado_id){
-        $data['empleado_id'] = $empleado_id;
-        $data['fecha_inicio'] = $request->fecha_inicio;
-        $data['fecha_fin'] = $request->fecha_fin;
-
-        $date1 = $request->fecha_inicio;
-        $date2 = $request->fecha_fin;
-
-        $timestamp1 = strtotime($date1);
-        $timestamp2 = strtotime($date2);
-
-        $seconds_diff = $timestamp2 - $timestamp1;
-        $days_diff = floor($seconds_diff / (60 * 60 * 24));
-
-        $data['numero_dias'] = $days_diff;
-        Incapacidad::create($data);
-        return response()->json('Exito');
-    }
-
     public function eliminarIncapacidad($incapacidad_id){
         Incapacidad::findOrFail($incapacidad_id)->delete();
         return Redirect::back();
@@ -138,7 +119,7 @@ class HomeController extends Controller
         $data['fecha'] = $fechaQuincena;
         $data['puesto'] = $empleado->puesto;
         $data['modo_pago'] = $empleado->modo_pago;
-        $data['sueldo_bruto'] = number_format($sueldoBase, 2);
+        $data['sueldo_bruto'] = number_format(($sueldoBase/2), 2);
         $data['dias_pagados'] = 15-$dias; //Cambiar por resta de dias de incapacidad a 30 dias.
 
         $data['vales_despensa'] = $empleado->vales_despensa == null ? '0' : number_format($empleado->vales_despensa, 2);

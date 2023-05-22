@@ -17,7 +17,6 @@ Route::get('/', 'HomeController@inicio')->name('inicio');
 Route::get('agregar/empleado', 'HomeController@vistaCrearEmpleado')->name('vistaCrearEmpleado');
 Route::get('editar/empleado/{empleado_id}', 'HomeController@vistaEditarEmpleado')->name('vistaEditarEmpleado');
 Route::get('eliminar/empleado/{empleado_id}', 'HomeController@eliminarEmpleado')->name('eliminarEmpleado');
-Route::post('agregar/incapacidad/{empleado_id}', 'HomeController@agregarIncapacidad')->name('agregarIncapacidad');
 Route::get('eliminar/incapacidad/{incapacidad_id}', 'HomeController@eliminarIncapacidad')->name('eliminarIncapacidad');
 Route::post('agregar/empleado', 'HomeController@guardarEmpleado')->name('guardarEmpleado');
 Route::patch('editar/empleado/{empleado_id}', 'HomeController@actualizarEmpleado')->name('actualizarEmpleado');

@@ -53,7 +53,7 @@
     </tr>
     <tr>
         <td style="text-align: right">
-            <p>SUELDO BASE:</p>
+            <p>SUELDO QUINCENAL:</p>
             <hr>
             <p>SUELDO X DIAS PAGADOS:</p>
 

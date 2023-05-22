@@ -77,27 +77,6 @@
         </div>
 
         <hr class="mb-2">
-
-        <div class="flex flex-wrap mb-6">
-            <h2 class="text-2xl px-3 text-gray-700 mb-3 w-full font-semibold">Incapacidades</h2>
-            <div class="px-3 w-1/3">
-                <label class="block uppercase tracking-wide text-gray-700 text-base font-bold mb-2" for="grid-last-name">
-                    Fecha de Inicio
-                </label>
-                <input id="fecha_inicio" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="date">
-            </div>
-            <div class="px-3 w-1/3">
-                <label class="block uppercase tracking-wide text-gray-700 text-base font-bold mb-2" for="grid-last-name">
-                    Fecha de Termino
-                </label>
-                <input id="fecha_fin" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="date">
-            </div>
-            <div class="px-3 w-1/3 flex items-end">
-                <button id="agregarIncapacidad" data-id="{{ $data->id }}" type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded">
-                    Agregar
-                </button>
-            </div>
-
             <div class="px-3 w-full">
                 <table class="w-full text-base mt-5 text-left text-black">
                     <thead class="text-base text-black uppercase bg-gray-300">
